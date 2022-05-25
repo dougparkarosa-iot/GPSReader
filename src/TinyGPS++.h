@@ -286,8 +286,6 @@ private:
 
 /// \brief Class to hold a 32 bit integer value
 class TinyGPSInteger {
-  friend class TinyGPSPlus;
-
 public:
   /// Query if the data is valid.
   /// \return true if valid false otherwise.
@@ -314,12 +312,13 @@ public:
   TinyGPSInteger()
       : valid(false), updated(false), lastCommitTime(), val(0), newval() {}
 
+  void commit();
+  void set(const char *term);
+
 private:
   bool valid, updated;
   uint32_t lastCommitTime;
   uint32_t val, newval;
-  void commit();
-  void set(const char *term);
 };
 
 /// \brief Class to hold GPS speed value
