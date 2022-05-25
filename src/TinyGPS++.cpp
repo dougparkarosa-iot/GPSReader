@@ -450,14 +450,14 @@ void TinyGPSCustom::set(const char *term) {
 
 void TinyGPSPlus::insertCustom(TinyGPSCustom *pElt, const char *sentenceName,
                                int termNumber) {
-  TinyGPSCustom **ppelt;
+  TinyGPSCustom **pPelt;
 
-  for (ppelt = &this->customElts; *ppelt != NULL; ppelt = &(*ppelt)->next) {
-    int cmp = strcmp(sentenceName, (*ppelt)->sentenceName);
-    if (cmp < 0 || (cmp == 0 && termNumber < (*ppelt)->termNumber))
+  for (pPelt = &this->customElts; *pPelt != NULL; pPelt = &(*pPelt)->next) {
+    int cmp = strcmp(sentenceName, (*pPelt)->sentenceName);
+    if (cmp < 0 || (cmp == 0 && termNumber < (*pPelt)->termNumber))
       break;
   }
 
-  pElt->next = *ppelt;
-  *ppelt = pElt;
+  pElt->next = *pPelt;
+  *pPelt = pElt;
 }

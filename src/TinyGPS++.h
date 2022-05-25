@@ -120,7 +120,8 @@ private:
   uint32_t lastCommitTime;
 };
 
-struct TinyGPSDate {
+/// \brief Class to hold GPS date
+class TinyGPSDate {
   friend class TinyGPSPlus;
 
 public:
@@ -149,6 +150,7 @@ private:
   void setDate(const char *term);
 };
 
+/// \brief Class to hold GPS time
 struct TinyGPSTime {
   friend class TinyGPSPlus;
 
@@ -179,8 +181,9 @@ private:
   void setTime(const char *term);
 };
 
-struct TinyGPSDecimal {
-  friend class TinyGPSPlus;
+/// \brief Class to hold GPS decimal value
+class TinyGPSDecimal {
+  // friend class TinyGPSPlus;
 
 public:
   bool isValid() const { return valid; }
@@ -196,15 +199,17 @@ public:
   TinyGPSDecimal()
       : valid(false), updated(false), lastCommitTime(), val(0), newval() {}
 
+  void commit();
+  void set(const char *term);
+
 private:
   bool valid, updated;
   uint32_t lastCommitTime;
   int32_t val, newval;
-  void commit();
-  void set(const char *term);
 };
 
-struct TinyGPSInteger {
+/// \brief Class to hold GPS integer value
+class TinyGPSInteger {
   friend class TinyGPSPlus;
 
 public:
@@ -229,17 +234,20 @@ private:
   void set(const char *term);
 };
 
-struct TinyGPSSpeed : TinyGPSDecimal {
+/// \brief Class to hold GPS speed value
+class TinyGPSSpeed : public TinyGPSDecimal {
   double knots() { return value() / 100.0; }
   double mph() { return _GPS_MPH_PER_KNOT * value() / 100.0; }
   double mps() { return _GPS_MPS_PER_KNOT * value() / 100.0; }
   double kmph() { return _GPS_KMPH_PER_KNOT * value() / 100.0; }
 };
 
-struct TinyGPSCourse : public TinyGPSDecimal {
+/// \brief Class to hold GPS course value
+class TinyGPSCourse : public TinyGPSDecimal {
   double deg() { return value() / 100.0; }
 };
 
+/// \brief Class to hold GPS altitude value
 struct TinyGPSAltitude : TinyGPSDecimal {
   double meters() { return value() / 100.0; }
   double miles() { return _GPS_MILES_PER_METER * value() / 100.0; }
