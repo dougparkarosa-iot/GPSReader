@@ -40,46 +40,84 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define _GPS_FEET_PER_METER 3.2808399
 #define _GPS_MAX_FIELD_SIZE 15
 
+/// \brief stuct for NEMA format degrees
+/// Struct to hold degrees in the National Marine Electronics Association (NMEA)
+/// format
+///
+/// see parseDegrees()
 struct RawDegrees {
-  uint16_t deg;
-  uint32_t billionths;
-  bool negative;
+  uint16_t deg;        ///< Degrees
+  uint32_t billionths; ///< billionths of minutes
+  bool negative;       ///< true if negative false otherwise
 
 public:
+  /// Constructor
   RawDegrees() : deg(0), billionths(0), negative(false) {}
 };
 
-struct TinyGPSLocation {
-  friend class TinyGPSPlus;
+/// \brief GPS Location
+class TinyGPSLocation {
+
+  /// \todo elminate need for TinyGPSPlus to access our internals.
+  // friend class TinyGPSPlus;
 
 public:
+  /// Query if the location data is valid.
+  /// \return true if valid false otherwise.
   bool isValid() const { return valid; }
+
+  /// Query if the location data has been updated
+  /// \return true if valid false otherwise.
   bool isUpdated() const { return updated; }
+
+  /// Age of the location in miliseconds.
+  ///
+  /// \return age in milliseconds if valid. ULONG_MAX otherwise.
   uint32_t age() const {
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
+
+  /// Get the raw lattitude
+  /// Marks the data as not updated.
+  /// \return the lattitude
   const RawDegrees &rawLat() {
     updated = false;
     return rawLatData;
   }
+
+  /// Get the raw longitude
+  /// Marks the data as not updated.
+  /// \return the longitude
   const RawDegrees &rawLng() {
     updated = false;
     return rawLngData;
   }
+
+  /// Get the latitude
+  /// Marks the data as not updated.
+  /// \return the latitude
   double lat();
+
+  /// Get the longitude
+  /// Marks the data as not updated.
+  /// \return the longitude
   double lng();
 
+  /// Constructor
   TinyGPSLocation()
       : valid(false), updated(false), rawLatData(), rawLngData(),
         rawNewLatData(), rawNewLngData(), lastCommitTime() {}
+
+  void commit();
+  void setLatitude(const char *term);
+  void setLatitudeNegative(bool negate) { rawNewLatData.negative = negate; }
+  void setLongitude(const char *term);
+  void setLongitudeNegative(bool negate) { rawNewLngData.negative = negate; }
 
 private:
   bool valid, updated;
   RawDegrees rawLatData, rawLngData, rawNewLatData, rawNewLngData;
   uint32_t lastCommitTime;
-  void commit();
-  void setLatitude(const char *term);
-  void setLongitude(const char *term);
 };
 
 struct TinyGPSDate {
