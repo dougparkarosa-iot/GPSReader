@@ -1,5 +1,5 @@
 /*
-TinyGPS++ - a small GPS library for Arduino providing universal NMEA parsing
+TinyGPS++ - a small GPS library for Arduino providing universal NEMA parsing
 Based on work by and "distanceBetween" and "courseTo" courtesy of Maarten
 Lamers. Suggestion to add satellites, courseTo(), and cardinal() by Matt Monson.
 Location precision improvements suggested by Wayne Holder.
@@ -41,7 +41,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define _GPS_MAX_FIELD_SIZE 15
 
 /// \brief stuct for NEMA format degrees
-/// Struct to hold degrees in the National Marine Electronics Association (NMEA)
+/// Struct to hold degrees in the National Marine Electronics Association (NEMA)
 /// format
 ///
 /// see parseDegrees()
@@ -57,9 +57,6 @@ public:
 
 /// \brief GPS Location
 class TinyGPSLocation {
-
-  /// \todo elminate need for TinyGPSPlus to access our internals.
-  // friend class TinyGPSPlus;
 
 public:
   /// Query if the location data is valid.
@@ -77,9 +74,9 @@ public:
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
 
-  /// Get the raw lattitude
+  /// Get the raw latitude
   /// Marks the data as not updated.
-  /// \return the lattitude
+  /// \return the latitude
   const RawDegrees &rawLat() {
     updated = false;
     return rawLatData;
@@ -205,15 +202,30 @@ public:
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
 
+  /// Get the integral value storing the time and mark it as not updated.
+  /// \return the time.
   uint32_t value() {
     updated = false;
     return time;
   }
+
+  /// Get the hour and mark it as not updated.
+  /// \return the hour.
   uint8_t hour();
+
+  /// Get the minute and mark it as not updated.
+  /// \return the minute
   uint8_t minute();
+
+  /// Get the second and mark it as not updated.
+  /// \return the second.
   uint8_t second();
+
+  /// Get hundredths of a second and mark as not updated.
+  /// \return hundredths of seconds.
   uint8_t centisecond();
 
+  /// Constructor
   TinyGPSTime()
       : valid(false), updated(false), time(0), newTime(), lastCommitTime() {}
 
@@ -230,20 +242,37 @@ class TinyGPSDecimal {
   // friend class TinyGPSPlus;
 
 public:
+  /// Query if the decimal data is valid.
+  /// \return true if valid false otherwise.
   bool isValid() const { return valid; }
+
+  /// Query if the decimal data has been updated.
+  /// \return true if data has been updated false otherwise.
   bool isUpdated() const { return updated; }
+
+  /// Get the age of the decimal data in milliseconds
+  /// \return age in milliseconds if valid. ULONG_MAX otherwise.
   uint32_t age() const {
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
+
+  /// Get the value of the decimal data and mark it as not updated.
+  /// \return the decimal value.
   int32_t value() {
     updated = false;
     return val;
   }
 
+  /// Constructor
   TinyGPSDecimal()
       : valid(false), updated(false), lastCommitTime(), val(0), newval() {}
 
+  /// Commit changes
   void commit();
+
+  /// Set the data from input string.
+  /// \param term the input string
+  /// uses TinyGPSPlus::parseDecimal to interpret term
   void set(const char *term);
 
 private:
