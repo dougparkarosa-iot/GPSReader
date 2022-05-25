@@ -149,7 +149,7 @@ public:
   bool isUpdated() const { return updated; }
 
   /// Get the age of the date in miliseconds.
-  /// \return age in miliseconds.
+  /// \return age in milliseconds if valid. ULONG_MAX otherwise.
   uint32_t age() const {
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
@@ -171,7 +171,7 @@ public:
   uint8_t month();
 
   /// Extract day of month and mark it as no longer updated.
-  /// \reurn day of month
+  /// \return day of month
   uint8_t day();
 
   /// Constructor
@@ -191,8 +191,16 @@ struct TinyGPSTime {
   friend class TinyGPSPlus;
 
 public:
+  /// Query if the time data is valid.
+  /// \return true if valid false otherwise.
   bool isValid() const { return valid; }
+
+  /// Query if the time data has been updated.
+  /// \return true if updated false otherwise.
   bool isUpdated() const { return updated; }
+
+  /// Get the age of the time data in milliseconds
+  /// \return age in milliseconds if valid. ULONG_MAX otherwise.
   uint32_t age() const {
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
