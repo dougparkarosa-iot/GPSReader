@@ -108,11 +108,26 @@ public:
       : valid(false), updated(false), rawLatData(), rawLngData(),
         rawNewLatData(), rawNewLngData(), lastCommitTime() {}
 
+  /// Commit changes
   void commit();
+
+  /// Set the latitude by parsing the input string
+  /// \param term string containing the latitude
   void setLatitude(const char *term);
-  void setLatitudeNegative(bool negate) { rawNewLatData.negative = negate; }
+
+  /// Change the sign of the latitude data.
+  /// \param negative true if negative false if positive
+  void setLatitudeNegative(bool negative) { rawNewLatData.negative = negative; }
+
+  /// Set the longitude by parsing the input string
+  /// \param term string containing the longitude
   void setLongitude(const char *term);
-  void setLongitudeNegative(bool negate) { rawNewLngData.negative = negate; }
+
+  /// Change the sign of the longitude data.
+  /// \param negative true if negative false if positive
+  void setLongitudeNegative(bool negative) {
+    rawNewLngData.negative = negative;
+  }
 
 private:
   bool valid, updated;
@@ -125,20 +140,41 @@ class TinyGPSDate {
   friend class TinyGPSPlus;
 
 public:
+  /// Query if the date data is valid.
+  /// \return true if valid false otherwise.
   bool isValid() const { return valid; }
+
+  /// Query if the date data is updated
+  /// \return true if updated false otherwise.
   bool isUpdated() const { return updated; }
+
+  /// Get the age of the date in miliseconds.
+  /// \return age in miliseconds.
   uint32_t age() const {
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
 
+  /// Access the date value and mark it as no longer
+  /// updated.
+  /// \return date
   uint32_t value() {
     updated = false;
     return date;
   }
+
+  /// Extract the year and mark it as no longer updated.
+  /// \return year
   uint16_t year();
+
+  /// Extract the month and mark it as no longer updated
+  /// \return month
   uint8_t month();
+
+  /// Extract day of month and mark it as no longer updated.
+  /// \reurn day of month
   uint8_t day();
 
+  /// Constructor
   TinyGPSDate()
       : valid(false), updated(false), date(0), newDate(), lastCommitTime() {}
 
