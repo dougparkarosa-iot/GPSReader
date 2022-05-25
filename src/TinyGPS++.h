@@ -40,8 +40,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define _GPS_FEET_PER_METER 3.2808399
 #define _GPS_MAX_FIELD_SIZE 15
 
-/// \brief stuct for NEMA format degrees
-/// Struct to hold degrees in the National Marine Electronics Association (NEMA)
+/// \brief stuct for NMEA format degrees
+/// Struct to hold degrees in the National Marine Electronics Association (NMEA)
 /// format
 ///
 /// see parseDegrees()
@@ -238,6 +238,9 @@ private:
 };
 
 /// \brief Class to hold GPS decimal value
+///
+/// integer value 10*the float value. For example 1234.56 is 123456
+/// -1234.56 is -123456.
 class TinyGPSDecimal {
   // friend class TinyGPSPlus;
 
@@ -281,21 +284,33 @@ private:
   int32_t val, newval;
 };
 
-/// \brief Class to hold GPS integer value
+/// \brief Class to hold a 32 bit integer value
 class TinyGPSInteger {
   friend class TinyGPSPlus;
 
 public:
+  /// Query if the data is valid.
+  /// \return true if valid false otherwise.
   bool isValid() const { return valid; }
+
+  /// Query if the data has been updated.
+  /// \return true if data has been updated false otherwise.
   bool isUpdated() const { return updated; }
+
+  /// Get the age of the data in milliseconds
+  /// \return age in milliseconds if valid. ULONG_MAX otherwise.
   uint32_t age() const {
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
+
+  /// Get the value of the data and mark it as not updated.
+  /// \return the decimal value.
   uint32_t value() {
     updated = false;
     return val;
   }
 
+  /// Constructor
   TinyGPSInteger()
       : valid(false), updated(false), lastCommitTime(), val(0), newval() {}
 

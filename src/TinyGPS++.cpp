@@ -27,8 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <stdlib.h>
 #include <string.h>
 
-#define _GPRMCterm "GPRMC"
-#define _GPGGAterm "GPGGA"
+#define _GPRMCterm "GPRMC" // Recommended minimum specific GPS/Transit data
+#define _GPGGAterm "GPGGA" // Global Positioning System Fix Data
 #define _GNRMCterm "GNRMC"
 #define _GNGGAterm "GNGGA"
 
@@ -96,7 +96,11 @@ int TinyGPSPlus::fromHex(char a) {
 }
 
 // static
-// Parse a (potentially negative) number with up to 2 decimal digits -xxxx.yy
+/// Parse a (potentially negative) number with up to 2 decimal digits -xxxx.yy
+/// Result is integer value 10*the float value. For example 1234.56 is 123456
+/// -1234.56 is -123456.
+/// \param term text to parse
+/// \return the decimal value.
 int32_t TinyGPSPlus::parseDecimal(const char *term) {
   bool negative = *term == '-';
   if (negative)
@@ -113,7 +117,11 @@ int32_t TinyGPSPlus::parseDecimal(const char *term) {
 }
 
 // static
-// Parse degrees in that funny NMEA format DDMM.MMMM
+
+/// Parse degrees in from NMEA format DDMM.MMMM
+///
+/// \param term input string to parse
+/// \param deg output RawDegrees struct containing parsed term
 void TinyGPSPlus::parseDegrees(const char *term, RawDegrees &deg) {
   uint32_t leftOfDecimal = (uint32_t)atol(term);
   uint16_t minutes = (uint16_t)(leftOfDecimal % 100);
