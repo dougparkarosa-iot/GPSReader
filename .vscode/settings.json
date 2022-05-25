@@ -1,10 +1,14 @@
 {
   "cSpell.words": [
     "centisecond",
+    "GNGGA",
+    "GNRMC",
+    "GPGGA",
+    "GPRMC",
     "KMPH",
     "Maarten",
     "Mikal",
     "Monson",
-    "NEMA"
+    "NMEA"
   ]
 }
