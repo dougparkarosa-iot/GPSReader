@@ -285,19 +285,19 @@ double TinyGPSPlus::distanceBetween(double lat1, double long1, double lat2,
   // Because Earth is no exact sphere, rounding errors may be up to 0.5%.
   // Courtesy of Maarten Lamers
   double delta = radians(long1 - long2);
-  double sdlong = sin(delta);
-  double cdlong = cos(delta);
+  double sd_long = sin(delta);
+  double cd_long = cos(delta);
   lat1 = radians(lat1);
   lat2 = radians(lat2);
   double slat1 = sin(lat1);
-  double clat1 = cos(lat1);
+  double c_lat1 = cos(lat1);
   double slat2 = sin(lat2);
-  double clat2 = cos(lat2);
-  delta = (clat1 * slat2) - (slat1 * clat2 * cdlong);
+  double c_lat2 = cos(lat2);
+  delta = (c_lat1 * slat2) - (slat1 * c_lat2 * cd_long);
   delta = sq(delta);
-  delta += sq(clat2 * sdlong);
+  delta += sq(c_lat2 * sd_long);
   delta = sqrt(delta);
-  double denom = (slat1 * slat2) + (clat1 * clat2 * cdlong);
+  double denom = (slat1 * slat2) + (c_lat1 * c_lat2 * cd_long);
   delta = atan2(delta, denom);
   return delta * 6372795;
 }
@@ -308,11 +308,11 @@ double TinyGPSPlus::courseTo(double lat1, double long1, double lat2,
   // 2, both specified as signed decimal-degrees latitude and longitude. Because
   // Earth is no exact sphere, calculated course may be off by a tiny fraction.
   // Courtesy of Maarten Lamers
-  double dlon = radians(long2 - long1);
+  double d_lon = radians(long2 - long1);
   lat1 = radians(lat1);
   lat2 = radians(lat2);
-  double a1 = sin(dlon) * cos(lat2);
-  double a2 = sin(lat1) * cos(lat2) * cos(dlon);
+  double a1 = sin(d_lon) * cos(lat2);
+  double a2 = sin(lat1) * cos(lat2) * cos(d_lon);
   a2 = cos(lat1) * sin(lat2) - a2;
   a2 = atan2(a1, a2);
   if (a2 < 0.0) {
