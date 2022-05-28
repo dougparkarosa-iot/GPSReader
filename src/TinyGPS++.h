@@ -445,6 +445,8 @@ public:
   /// \return true is sentence parsed so far is valid false otherwise.
   bool encode(char c); // process one character received from GPS
 
+  bool isUpdated() const;
+
   /// operator version that wraps call to encode
   /// \param c input character
   /// \return TinyGPSPlus reference to this class.

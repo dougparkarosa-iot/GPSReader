@@ -83,6 +83,12 @@ bool TinyGPSPlus::encode(char c) {
   return false;
 }
 
+bool TinyGPSPlus::isUpdated() const {
+  return location.isUpdated() || date.isUpdated() || time.isUpdated() ||
+         speed.isUpdated() || course.isUpdated() || altitude.isUpdated() ||
+         satellites.isUpdated() || hdop.isUpdated();
+}
+
 //
 // internal utilities
 //
