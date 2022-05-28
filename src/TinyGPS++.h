@@ -445,6 +445,10 @@ public:
   /// \return true is sentence parsed so far is valid false otherwise.
   bool encode(char c); // process one character received from GPS
 
+  /// Check to see if any data has been updated.
+  ///
+  /// \return true if any of location, date, time, speed, course, altitude,
+  /// satellites or hdop have changed, false otherwise.
   bool isUpdated() const;
 
   /// operator version that wraps call to encode
