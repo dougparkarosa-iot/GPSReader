@@ -73,7 +73,7 @@ bool TinyGPSPlus::encode(char c) {
     return false;
 
   default: // ordinary characters
-    if (curTermOffset < sizeof(term) - 1)
+    if (curTermOffset < (sizeof(term) - 1))
       term[curTermOffset++] = c;
     if (!isChecksumTerm)
       parity ^= c;
