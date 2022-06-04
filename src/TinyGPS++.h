@@ -329,9 +329,20 @@ private:
 /// \brief Class to hold GPS speed value
 class TinyGPSSpeed : public TinyGPSDecimal {
 public:
+  /// Return speed in knots.
+  /// \return speed in knots.
   double knots() { return value() / 100.0; }
+
+  /// Return speed in miles per hour.
+  /// \return speed in mph.
   double mph() { return _GPS_MPH_PER_KNOT * value() / 100.0; }
+
+  /// Return speed in meters per second.
+  /// \return speed in meters per second.
   double mps() { return _GPS_MPS_PER_KNOT * value() / 100.0; }
+
+  /// Return speed in kilometers per hour.
+  /// \return speed in kilometers per hour.
   double kmph() { return _GPS_KMPH_PER_KNOT * value() / 100.0; }
 };
 
