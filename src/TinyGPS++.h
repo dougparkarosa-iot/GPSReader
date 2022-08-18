@@ -348,6 +348,7 @@ public:
 
 /// \brief Class to hold GPS course value
 class TinyGPSCourse : public TinyGPSDecimal {
+public:
   double deg() { return value() / 100.0; }
 };
 
@@ -383,6 +384,7 @@ struct TinyGPSAltitude : TinyGPSDecimal {
 ///
 /// This is a GPS Decimal value
 class TinyGPSHDOP : public TinyGPSDecimal {
+public:
   /// Get the HDOP value and mark as not updated.
   /// \return HDOP value.
   double hdop() { return value() / 100.0; }
