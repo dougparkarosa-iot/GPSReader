@@ -346,7 +346,8 @@ public:
   double kmph() { return _GPS_KMPH_PER_KNOT * value() / 100.0; }
 };
 
-/// \brief Class to hold GPS course value
+/// \brief Class to hold GPS course 
+/// Course is degrees relative to north 0 is north, clockwise through 360.
 class TinyGPSCourse : public TinyGPSDecimal {
 public:
   double deg() { return value() / 100.0; }
@@ -501,7 +502,8 @@ public:
   /// returns course in degrees (North=0, West=270) from position 1 to position
   /// 2, both specified as signed decimal-degrees latitude and longitude.
   /// Because Earth is no exact sphere, calculated course may be off by a tiny
-  /// fraction. Courtesy of Maarten Lamers \param lat1 first latitude value.
+  /// fraction. Courtesy of Maarten Lamers 
+  /// \param lat1 first latitude value.
   /// \param long1 first longitude value.
   /// \param lat2 second latitude value.
   /// \param long2 second longitude value.
