@@ -25,10 +25,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define __TinyGPSPlus_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
+#include <Arduino.h> // Include the Arduino library
 #else
 // #include "WProgram.h"
 #endif
+#include <cstdint>
 #include <limits.h>
 
 #define _GPS_VERSION "2.0.0-a1" // software version of this library
@@ -70,6 +71,7 @@ public:
   /// Age of the location in miliseconds.
   ///
   /// \return age in milliseconds if valid. ULONG_MAX otherwise.
+
   uint32_t age() const {
     return valid ? millis() - lastCommitTime : (uint32_t)ULONG_MAX;
   }
@@ -350,6 +352,12 @@ public:
 /// Course is degrees relative to north 0 is north, clockwise through 360.
 class TinyGPSCourse : public TinyGPSDecimal {
 public:
+  /**
+   * @brief Converts the value returned by the `value` function to degrees.
+   *
+   * @return The value returned by the `value` function divided by 100.0,
+   * representing degrees.
+   */
   double deg() { return value() / 100.0; }
 };
 

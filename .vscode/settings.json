@@ -7,6 +7,7 @@
     "GPGGA",
     "GPGSA",
     "GPRMC",
+    "GPSHDOP",
     "HDOP",
     "KMPH",
     "Maarten",
