@@ -23,14 +23,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "TinyGPS++.h"
 
+/// \file
+/// \brief TinyGPS++ implementation file
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define _GPRMCterm "GPRMC" // Recommended minimum specific GPS/Transit data
-#define _GPGGAterm "GPGGA" // Global Positioning System Fix Data
-#define _GNRMCterm "GNRMC"
-#define _GNGGAterm "GNGGA"
+#define _GPRMCterm                                                             \
+  "GPRMC" ///< Time, date, position, course, and speed data. Recommended minimum
+          ///< specific GPS/Transit data
+#define _GPGGAterm                                                             \
+  "GPGGA" ///< Global positioning system fix data (time, position, fix type
+          ///< data)
+#define _GNRMCterm "GNRMC" ///< Time, date, position, course and speed data.
+#define _GNGGAterm                                                             \
+  "GNGGA" ///< Time, position, and fix related data of the receiver.
 
 TinyGPSPlus::TinyGPSPlus()
     : parity(0), isChecksumTerm(false), curSentenceType(GPS_SENTENCE_OTHER),
@@ -150,6 +157,10 @@ void TinyGPSPlus::parseDegrees(const char *term, RawDegrees &deg) {
   deg.negative = false;
 }
 
+/// Combine sentence type and term number into a single value
+///
+/// \param sentence_type the sentence type
+/// \param term_number the term number
 #define COMBINE(sentence_type, term_number)                                    \
   (((unsigned)(sentence_type) << 5) | term_number)
 

@@ -24,6 +24,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef __TinyGPSPlus_h
 #define __TinyGPSPlus_h
 
+/// \file
+/// \brief TinyGPS++ - a small GPS library for Arduino providing universal NMEA
+/// parsing
+
 #if defined(ARDUINO) && ARDUINO >= 100
 #include <Arduino.h> // Include the Arduino library
 #else
@@ -32,14 +36,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <cstdint>
 #include <limits.h>
 
-#define _GPS_VERSION "2.0.0-a1" // software version of this library
-#define _GPS_MPH_PER_KNOT 1.15077945
-#define _GPS_MPS_PER_KNOT 0.51444444
-#define _GPS_KMPH_PER_KNOT 1.852
-#define _GPS_MILES_PER_METER 0.00062137112
-#define _GPS_KM_PER_METER 0.001
-#define _GPS_FEET_PER_METER 3.2808399
-#define _GPS_MAX_FIELD_SIZE 15
+#define _GPS_VERSION "2.0.0-a1"            ///< software version of this library
+#define _GPS_MPH_PER_KNOT 1.15077945       ///< MPH per knot
+#define _GPS_MPS_PER_KNOT 0.51444444       ///< Meters per second per knot
+#define _GPS_KMPH_PER_KNOT 1.852           ///< Kilometers per hour per knot
+#define _GPS_MILES_PER_METER 0.00062137112 ///< Miles per meter
+#define _GPS_KM_PER_METER 0.001            ///< Kilometers per meter
+#define _GPS_FEET_PER_METER 3.2808399      ///< Feet per meter
+#define _GPS_MAX_FIELD_SIZE 15             ///< Maximum field size
 
 /// \brief stuct for NMEA format degrees
 /// Struct to hold degrees in the National Marine Electronics Association (NMEA)
